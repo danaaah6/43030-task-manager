@@ -1,0 +1,22 @@
+name: GitHub Projects Automation
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  move-issue-to-done:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Only continue if the pull request was merged (not just closed)
+      - name: Check if PR is merged
+        if: github.event.pull_request.merged == true
+        run: |
+          echo "PR #${{ github.event.pull_request.number }} was merged by ${{ github.actor }}"
+          echo "Title: ${{ github.event.pull_request.title }}"
+          echo "Linked issue will be closed by the 'Closes #' keyword."
+          echo "The project board's built-in workflow moves closed issues to Done."
