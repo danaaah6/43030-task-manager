@@ -26,6 +26,13 @@ class TestTaskPool(unittest.TestCase):
         self.assertEqual(len(done_tasks), 3)
         self.assertTrue(all(task.status == "Done" for task in done_tasks))
 
+    def test_mark_completed(self):
+        task = Task("Review pull request")
+        self.assertEqual(task.status, "ToDo")
+        task.mark_completed()
+        self.assertEqual(task.status, "Done")
+        self.assertTrue(task.completed)
+
 
 if __name__ == "__main__":
     suite = unittest.TestLoader().loadTestsFromTestCase(TestTaskPool)
